@@ -10,6 +10,6 @@ class Books extends Model
     use HasFactory;
 
     // add the attributes to this model    // ask to make sure this is the right way
-    // protected $appends = ['id', 'book_title', 'book_description', 'book_auther', 'book_image' ];
+    protected $appends = ['book_title', 'description', 'author', 'image' ];
 
 }

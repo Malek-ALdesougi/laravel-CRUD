@@ -21,6 +21,9 @@ Route::get('/welcome', function () {
 
 Route::get('/home', [BooksController::class, 'index']);
 
-// Route::get('/test', function() {
-//     return view('test');
-// });
+// route to take the user data 
+Route::post('/middel', [BooksController::class, 'create']);
+
+Route::get('/addBook', function() {
+    return view('addBook');
+});
