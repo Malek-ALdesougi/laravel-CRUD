@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Books;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class BooksController extends Controller
 {
@@ -23,21 +26,35 @@ class BooksController extends Controller
 
         $book = Books::all();
 
-        return view('/home', ['allBooks' =>$book]);
-
+        return view('/home', ['allBooks' => $book]);
     }
 
     // insert data into the database 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
 
+        $request->validate([
+            'title' => 'Required|max:10',
+            'Description' =>'Required',
+            'Author' => 'Required',
+            'image' => 'Required'
+        ]);
+
+        $bookImage = $request->file('image');
+        $extension = $bookImage->getClientOriginalExtension();
+        Storage::disk('public')->put($bookImage->getFilename() . '.' . $extension,  File::get($bookImage));
+        
         $newBook = new Books;
-
-        $newBook->book_title = $request->title ;
+        
+        $newBook->book_title = $request->title;
         $newBook->Description = $request->Description;
         $newBook->Author = $request->Author;
-        $newBook->image = $request->image;
+        // $newBook->image = $request->image;
+        // $newBook->original_filename = $bookImage->getClientOriginalName();
+        // $newBook->filename = $bookImage->getFilename().'.'.$extension;
 
         $newBook->save();
-        
+
+        return redirect('/home');
     }
 };

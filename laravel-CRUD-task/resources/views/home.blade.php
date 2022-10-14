@@ -16,14 +16,18 @@
                     <th>description</th>
                     <th>author</th>
                     <th>image</th>
+                    <th>Action</th>
+                    <th>Action</th>
                 </thead>
 
                 @foreach ($allBooks as $Book)
                     <tr>
-                        <td>{{ $Book['title'] }}</td>
+                        <td>{{ $Book['book_title'] }}</td>
                         <td>{{ $Book['description'] }}</td>
                         <td>{{ $Book['author'] }}</td>
                         <td><img height="40px" width="40px" src="{{ $Book['image'] }}"></td>
+                        <td><button class="btn btn-success">Edit</button></td>
+                        <td><button class="btn btn-danger">Delete</button></td>
                     </tr>
                 @endforeach
             </tbody>
