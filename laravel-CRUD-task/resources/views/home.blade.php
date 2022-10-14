@@ -25,7 +25,7 @@
                         <td>{{ $Book['book_title'] }}</td>
                         <td>{{ $Book['description'] }}</td>
                         <td>{{ $Book['author'] }}</td>
-                        <td><img height="40px" width="40px" src="{{ $Book['image'] }}"></td>
+                        <td><img height="60px" width="60px" src="{{ asset('/storage/'. $Book->image)}}" alt="None"></td>
                         <td><button class="btn btn-success">Edit</button></td>
                         <td><button class="btn btn-danger">Delete</button></td>
                     </tr>
