@@ -10,20 +10,16 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 class BooksController extends Controller
 {
-
     // read data from the database and show them in the table in the home page
     public function index()
     {
         $book = Books::all();
-
         return view('/home', ['allBooks' => $book]);
     }
-
 
     // insert data into the database 
     public function create(Request $request)
     {
-
         $request->validate([
             'title' => 'Required|max:50',
             'Description' => 'Required',
@@ -37,26 +33,19 @@ class BooksController extends Controller
         $extension = $bookImage->getClientOriginalExtension();
         Storage::disk('public')->put($bookImage->getFilename() . '.' . $extension,  File::get($bookImage));
 
-
         $newBook = new Books;
-
         $newBook->book_title = $request->title;
         $newBook->Description = $request->Description;
         $newBook->Author = $request->Author;
         $newBook->image = $bookImage->getFilename() . '.' . $extension;
 
         $newBook->save();
-
         return redirect('/home');
     }
 
-
-
     public function post($id)
     {
-
         $book = Books::find($id);
-
         return view('/edit', ['book' => $book]);
     }
 
@@ -76,14 +65,12 @@ class BooksController extends Controller
         Storage::disk('public')->put($bookImage->getFilename() . '.' . $extension,  File::get($bookImage));
 
         $updateBook = Books::find($id);
-
         $updateBook->book_title = $request->title;
         $updateBook->Description = $request->Description;
         $updateBook->Author = $request->Author;
         $updateBook->image = $bookImage->getFilename() . '.' . $extension;
 
         $updateBook->save();
-
         return redirect('/home');
     }
 
@@ -94,11 +81,9 @@ class BooksController extends Controller
         return redirect('home')->with('success', 'Book deleted successfully');
     }
 
-
     public function search(Request $request){
-
-        $get_book = $request->search_book;
-        $book = Books::where('book_title', 'LIKE', '%'.$get_book.'%')->get();
+        $get_book = $request->search_book; 
+        $book = Books::where('book_title', 'LIKE' , '%'. $get_book .'%')->get();
         return view('search', compact('book'));
     }
 };
