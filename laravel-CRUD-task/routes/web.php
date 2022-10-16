@@ -24,6 +24,14 @@ Route::get('/home', [BooksController::class, 'index']);
 // route to take the user data 
 Route::post('/middel', [BooksController::class, 'create']);
 
-Route::get('/addBook', function() {
+Route::get('edit/{id}', [BooksController::class, 'post']);
+
+Route::put('update/{id}', [BooksController::class, 'update']);
+
+Route::delete('delete/{id}', [BooksController::class, 'delete']);
+
+Route::get('book/search', [BooksController::class, 'search']);
+
+Route::get('/addBook', function (){
     return view('addBook');
 });

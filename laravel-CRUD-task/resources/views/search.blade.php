@@ -10,7 +10,7 @@
     <div class="container">
 
         <div class="search d-flex justify-content-between">
-            <a href="addBook"><button class="btn btn-success mb-3">Add new BOOK</button></a>
+            <a href="/home"><button class="btn btn-success mb-3">BACK HOME</button></a>
             @if (Session::get('success', false))
                 <div style="background-color: green;"><?php echo $data = Session::get('success'); ?></div>
             @endif
@@ -33,7 +33,7 @@
                     <th>Action</th>
                 </thead>
 
-                @foreach ($allBooks as $Book)
+                @foreach ($book as $Book)
                     <tr>
                         <td>{{ $Book['id'] }}</td>
                         <td>{{ $Book['book_title'] }}</td>
@@ -41,9 +41,9 @@
                         <td>{{ $Book['author'] }}</td>
                         <td><img height="60px" width="60px" src="{{ asset('/storage/' . $Book->image) }}" alt="None">
                         </td>
-                        <td><a href="edit/{{ $Book['id'] }}"><button class="btn btn-success">Edit</button></a></td>
+                        <td><a href="/edit/{{ $Book['id'] }}"><button class="btn btn-success">Edit</button></a></td>
                         <td>
-                            <form action="delete/{{ $Book['id'] }}" method="post"
+                            <form action="/delete/{{ $Book['id'] }}" method="post"
                                 onsubmit="return confirm('Do you really want to delete this book !?')">
                                 @csrf
                                 @method('delete')
