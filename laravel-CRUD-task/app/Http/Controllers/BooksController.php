@@ -85,5 +85,12 @@ class BooksController extends Controller
         $get_book = $request->search_book; 
         $book = Books::where('book_title', 'LIKE' , '%'. $get_book .'%')->get();
         return view('search', compact('book'));
+
+    }
+
+    public function author($name){
+
+        return view('/author', ['author' => Books::where('author', $name)->get()]);
     }
 };
+// , author::where('name' , $name)]

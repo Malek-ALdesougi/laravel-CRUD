@@ -19,19 +19,28 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
+//route to fetch all table rows and post them into the home page table
 Route::get('/home', [BooksController::class, 'index']);
 
-// route to take the user data 
+// route to take the book data 
 Route::post('/middel', [BooksController::class, 'create']);
 
+//rout to post the book details into the edit page
 Route::get('edit/{id}', [BooksController::class, 'post']);
 
+//route to update the book data
 Route::put('update/{id}', [BooksController::class, 'update']);
 
+//route to delete a book 
 Route::delete('delete/{id}', [BooksController::class, 'delete']);
 
+//route to search a book
 Route::get('book/search', [BooksController::class, 'search']);
 
-Route::get('/addBook', function (){
+//author page 
+Route::get('/author/{name}', [BooksController::class, 'author']);
+
+//route to add a book 
+Route::get('/addBook', function () {
     return view('addBook');
 });

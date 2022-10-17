@@ -38,7 +38,7 @@
                         <td>{{ $Book['id'] }}</td>
                         <td>{{ $Book['book_title'] }}</td>
                         <td>{{ $Book['description'] }}</td>
-                        <td>{{ $Book['author'] }}</td>
+                        <td><a href="author/{{{$Book['author']}}}" style="text-decoration:none; color:white">{{ $Book['author'] }}</a></td>
                         <td><img height="60px" width="60px" src="{{ asset('/storage/' . $Book->image) }}" alt="None">
                         </td>
                         <td><a href="edit/{{ $Book['id'] }}"><button class="btn btn-success">Edit</button></a></td>

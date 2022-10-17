@@ -4,8 +4,6 @@
 
     <body
         style="background-image:url('https://i.pinimg.com/originals/67/18/22/671822c2f63dd5f65d8fd15c9710420b.jpg'); background-size:cover; background-repeat:no-repeat">
-
-
         <div style="width:400px; margin-top:50px" class="container bg-dark mt-20">
             {{-- /update/{{ $book['id'] }} --}}
             <form class="w-20" action='{{ url('update/' . $book['id']) }}' method="POST" enctype="multipart/form-data">
