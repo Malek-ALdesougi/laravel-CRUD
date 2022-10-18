@@ -2,13 +2,25 @@
 
 @section('title', 'Home page')
 
-@section('logo', 'Books')
+@section('logo')
+
+@auth
+   {{$user->name}}
+   <a style="text-decoration: none; color:black;" href="logout">logout</a>
+@endauth
+
+@endsection
+
+@section('login') 
+    @guest 
+    <a href="loginPage" style="color:black; font-weight:900; font-size:20px">login</a>
+    @endguest
+@endsection
 
 
 @section('table')
     <h1 class="text-warning" style="text-align: center">Books Page </h1>
     <div class="container">
-
         <div class="search d-flex justify-content-between">
             <a href="addBook"><button class="btn btn-success mb-3">Add new BOOK</button></a>
             @if (Session::get('success', false))

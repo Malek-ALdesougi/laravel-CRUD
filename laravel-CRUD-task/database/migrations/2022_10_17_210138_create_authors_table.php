@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            
-            
+            $table->foreignId('book_id');
+            $table->string('name');
+            $table->string('nationality');
+            $table->string('email');
             $table->timestamps();
         });
     }

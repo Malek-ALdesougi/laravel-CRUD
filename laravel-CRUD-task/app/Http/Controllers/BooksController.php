@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Books;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Contracts\Service\Attribute\Required;
 
@@ -14,7 +17,9 @@ class BooksController extends Controller
     public function index()
     {
         $book = Books::all();
-        return view('/home', ['allBooks' => $book]);
+        $name = Auth::user();
+        return view('/home', ['allBooks' => $book, 'user' => $name]);
+
     }
 
     // insert data into the database 
@@ -81,16 +86,76 @@ class BooksController extends Controller
         return redirect('home')->with('success', 'Book deleted successfully');
     }
 
-    public function search(Request $request){
-        $get_book = $request->search_book; 
-        $book = Books::where('book_title', 'LIKE' , '%'. $get_book .'%')->get();
+    public function search(Request $request)
+    {
+        $get_book = $request->search_book;
+        $book = Books::where('book_title', 'LIKE', '%' . $get_book . '%')->get();
         return view('search', compact('book'));
-
     }
 
-    public function author($name){
+    public function author($name)
+    {
 
         return view('/author', ['author' => Books::where('author', $name)->get()]);
     }
+    // , author::where('name' , $name)]
+
+
+    public function login(Request $request)
+    {
+        // dump($request->all());
+        // die;
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        //    if(Auth::attempt([$credentials]))
+        //    {
+        //     //login success 
+        //     return redirect('home');
+        //    }
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect('/home');
+        }
+
+        return back()->with('error', 'Your email or password are not correct ');
+    }
+
+
+    public function userRegisteration(Request $req)
+    {
+
+        $newUser = $req->validate([
+            'name' => 'required',
+            'email' =>'required|unique:users',
+            'password' =>'required'
+        ]);
+
+        $user = new User;
+
+        $user->name = $newUser['name'];
+        $user->email = $newUser['email'];
+        $user->password =Hash::make($newUser['password']);
+        $user->save();
+
+        return redirect('login');
+    }
+
+
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/home');
+    }
+
+
 };
-// , author::where('name' , $name)]

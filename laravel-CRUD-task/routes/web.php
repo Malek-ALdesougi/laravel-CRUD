@@ -34,7 +34,7 @@ Route::put('update/{id}', [BooksController::class, 'update']);
 //route to delete a book 
 Route::delete('delete/{id}', [BooksController::class, 'delete']);
 
-//route to search a book
+//route to search a book 
 Route::get('book/search', [BooksController::class, 'search']);
 
 //author page 
@@ -43,4 +43,22 @@ Route::get('/author/{name}', [BooksController::class, 'author']);
 //route to add a book 
 Route::get('/addBook', function () {
     return view('addBook');
+});
+
+//login route 
+Route::post('loginUser', [BooksController::class, 'login']);
+
+//register rout 
+Route::post('register', [BooksController::class, 'userRegisteration']);
+
+//logout route 
+Route::get('logout', [BooksController::class, 'logoutUser']);
+
+//login page 
+Route::get('loginPage', function(){
+    return view('login');
+});
+
+Route::get('login', function () {
+    return view('login');
 });
